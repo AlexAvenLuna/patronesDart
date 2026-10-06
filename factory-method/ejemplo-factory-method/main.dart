@@ -1,8 +1,16 @@
+import 'generador-excel.dart';
+import 'generador-json.dart';
 import 'generador-reportes.dart';
+import 'generador-texto.dart';
 
 void main() {
-  final generador = GeneradorReportes();
-  generador.generarReporte('json', [9, 8, 9, 10, 0, 0, 0, 0]);
-  generador.generarReporte('texto', [9, 8, 9, 10, 0, 0, 0, 0]);
-  generador.generarReporte('excel', [9, 8, 9, 10, 0, 0, 0, 0]);
+  final generadores = <GeneradorReportes>[
+    GeneradorTexto(),
+    GeneradorExcel(),
+    GeneradorJson(),
+  ];
+
+  for (final generador in generadores) {
+    generador.generarReporte([8, 9, 0, 10, 0]);
+  }
 }
