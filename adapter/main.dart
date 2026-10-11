@@ -1,26 +1,20 @@
-// SIN el patron Adapter
-// El cliente conoce los detalles de cada pasarela: sus metodos,
-// sus tipos de dato y como convertir el monto.
+// CON el patron Adapter
+// El cliente solo conoce ProcesadorPago. Agregar una pasarela nueva
+// solo requiere crear un adaptador nuevo, sin tocar este codigo.
 
+import 'adaptador-paypal.dart';
+import 'adaptador-stripe.dart';
 import 'pasarela-paypal.dart';
 import 'pasarela-stripe.dart';
-
-// Cada pasarela nueva obliga a modificar esta funcion
-void cobrar(Object pasarela, double monto) {
-  if (pasarela is PasarelaPaypal) {
-    pasarela.enviarPagoEnDolares(monto);
-  } else if (pasarela is PasarelaStripe) {
-    final centavos = (monto * 100).round();
-    pasarela.crearCargo(centavos);
-  } else {
-    throw ArgumentError('Pasarela no soportada');
-  }
-}
+import 'procesador-pago.dart';
 
 void main() {
-  final pasarelas = <Object>[PasarelaPaypal(), PasarelaStripe()];
+  final procesadores = <ProcesadorPago>[
+    AdaptadorPaypal(PasarelaPaypal()),
+    AdaptadorStripe(PasarelaStripe()),
+  ];
 
-  for (final pasarela in pasarelas) {
-    cobrar(pasarela, 250.75);
+  for (final procesador in procesadores) {
+    procesador.pagar(250.75);
   }
 }
