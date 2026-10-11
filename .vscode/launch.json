@@ -9,7 +9,7 @@
             "name": "Dart & Flutter",
             "request": "launch",
             "type": "dart",
-            "program": "factory-method/ejemplo-factory-method/main.dart"
+            "program": "adapter/main.dart"
         }
     ]
 }
